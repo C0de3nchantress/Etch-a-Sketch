@@ -7,9 +7,11 @@
 
 .heading {
     text-align: center;
-    margin: 10px;
     font-size: 48px;
     font-family: cursive;
+    padding: 24px;
+    background-color: #ccd5ae;
+    margin-bottom: 48px;
 }
 
 .container {
@@ -46,7 +48,6 @@
     border-radius: 5px;
     height: 1px;
     width: 100px;
-    margin: 10px;
     accent-color: hotpink;
 }
 
@@ -54,4 +55,10 @@
     text-align: center;
     font-size: 20px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    padding: 48px;
+}
+
+.options-bar {
+    background-color: #e9edc9;
+    margin-right: 32px;
 }
