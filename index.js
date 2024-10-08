@@ -25,9 +25,10 @@ const sliderValDiv = document.createElement("div");
 const sliderContainer = document.querySelector(".slider-container");
 
 sliderContainer.append(sliderValDiv);
-sliderValDiv.textContent = "16x16";
+
 
 const sizeSlider = document.querySelector(".size-slider");
+sliderValDiv.textContent = `${sizeSlider.value}x${sizeSlider.value}`;
 sizeSlider.addEventListener("input", () => {
     const sizeSliderVal = sizeSlider.value;
     gridContainer.innerHTML = "";
