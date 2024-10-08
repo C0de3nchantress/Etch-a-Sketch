@@ -21,3 +21,16 @@ function createGrid(size) {
 }
 
 createGrid(16);
+const sliderValDiv = document.createElement("div");
+const sliderContainer = document.querySelector(".slider-container");
+
+sliderContainer.append(sliderValDiv);
+sliderValDiv.textContent = "16x16";
+
+const sizeSlider = document.querySelector(".size-slider");
+sizeSlider.addEventListener("input", () => {
+    const sizeSliderVal = sizeSlider.value;
+    gridContainer.innerHTML = "";
+    createGrid(sizeSliderVal);
+    sliderValDiv.textContent = `${sizeSliderVal}x${sizeSliderVal}`;
+});

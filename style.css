@@ -29,10 +29,15 @@
 
 .grid-obj {
     border: 1px solid black;
-    
 }
-
 
 .perma-hover {
     background-color: pink;
+}
+
+.size-slider {
+    border-radius: 5px;
+    height: 1px;
+    margin: 10px;
+    accent-color: hotpink;
 }
