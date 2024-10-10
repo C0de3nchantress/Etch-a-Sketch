@@ -3,6 +3,7 @@ const gridContainer = document.querySelector(".grid.container");
 const colorButton = document.querySelector(".color-button");
 const rgbButton = document.querySelector(".rgb-button");
 const eraserButton = document.querySelector(".eraser-button");
+const clearButton = document.querySelector(".clear-button");
 
 let activeButton = null;
 
@@ -52,9 +53,11 @@ const sliderContainer = document.querySelector(".slider-container");
 sliderContainer.append(sliderValDiv);
 
 const sizeSlider = document.querySelector(".size-slider");
-sliderValDiv.textContent = `${sizeSlider.value}x${sizeSlider.value}`;
+let sizeSliderVal = sizeSlider.value;
+sliderValDiv.textContent = `${sizeSliderVal}x${sizeSliderVal}`;
+
 sizeSlider.addEventListener("input", () => {
-    const sizeSliderVal = sizeSlider.value;
+    sizeSliderVal = sizeSlider.value;
     gridContainer.innerHTML = "";
     createGrid(sizeSliderVal);
     sliderValDiv.textContent = `${sizeSliderVal}x${sizeSliderVal}`;
@@ -65,6 +68,8 @@ sizeSlider.addEventListener("input", () => {
         rgbButton.click();
     } else if (activeButton === eraserButton) {
         eraserButton.click();
+    } else if (activeButton === clearButton) {
+        clearButton.click();
     }
 });
 
@@ -112,5 +117,13 @@ rgbButton.addEventListener("click", () => {
 });
 
 eraserButton.addEventListener("click", () => {
-    gridStyles({backgroundColor: "#fefefe"})
-})
+    gridStyles({ backgroundColor: "#fefefe" });
+});
+
+clearButton.addEventListener("click", () => {
+    gridContainer.innerHTML = "";
+    createGrid(sizeSliderVal);
+
+    colorButton.click();
+    activeButton = colorButton;
+});
