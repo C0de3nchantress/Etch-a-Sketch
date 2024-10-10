@@ -1,5 +1,5 @@
 const gridContainer = document.querySelector(".grid.container");
-
+const colorButton = document.querySelector(".color-button");
 function createGrid(size) {
     for (let i = 0; i < size; i++) {
         const row = document.createElement("div");
@@ -12,8 +12,6 @@ function createGrid(size) {
         }
         gridContainer.appendChild(row);
     }
-
-    
 }
 
 function gridColor(styles) {
@@ -23,24 +21,25 @@ function gridColor(styles) {
         element.addEventListener("mousedown", () => {
             mouseIsDown = true;
             if (styles.backgroundColor) {
-                element.style.backgroundColor = styles.backgroundColor
+                element.style.backgroundColor = styles.backgroundColor;
             }
         });
 
         element.addEventListener("mouseover", () => {
             if (mouseIsDown) {
                 if (styles.backgroundColor) {
-                    element.style.backgroundColor = styles.backgroundColor
+                    element.style.backgroundColor = styles.backgroundColor;
                 }
             }
         });
-        });
-        document.addEventListener("mouseup", () => {
-            mouseIsDown = false;
+    });
+    document.addEventListener("mouseup", () => {
+        mouseIsDown = false;
     });
 }
 
 createGrid(16);
+
 const sliderValDiv = document.createElement("div");
 const sliderContainer = document.querySelector(".slider-container");
 
@@ -53,13 +52,11 @@ sizeSlider.addEventListener("input", () => {
     gridContainer.innerHTML = "";
     createGrid(sizeSliderVal);
     sliderValDiv.textContent = `${sizeSliderVal}x${sizeSliderVal}`;
+    colorButton.click();
 });
 
 const buttons = document.querySelectorAll("button");
 const buttonColorWhenClickedDiv = document.createElement("div");
-buttonColorWhenClickedDiv.style.backgroundColor = "black"
-buttonColorWhenClickedDiv.classList.add("button-color-when-clicked")
-
 
 buttons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -67,25 +64,27 @@ buttons.forEach((button) => {
             btn.style.backgroundColor = "";
             btn.style.color = "";
         });
-        button.style.backgroundColor = "#000000"
-        button.style.color = "#e9e9ed"
-    })
-})
+        button.style.backgroundColor = "#000000";
+        button.style.color = "#e9e9ed";
+    });
+});
 
 const colorInput = document.querySelector(".color-inp");
-const colorButton = document.querySelector(".color-button")
-colorInput.value = "#FFC0CB";    
+
+colorInput.value = "#FFC0CB";
 let colorChoice = colorInput.value;
 
 colorInput.addEventListener("input", () => {
     colorChoice = colorInput.value;
-    gridColor({backgroundColor: colorChoice});
-})
+    gridColor({ backgroundColor: colorChoice });
+});
 colorButton.addEventListener("click", () => {
-    gridColor({backgroundColor: colorChoice});
-})
+    gridColor({ backgroundColor: colorChoice });
+});
 
 document.addEventListener("DOMContentLoaded", () => {
     colorButton.click();
-})
+});
 
+const rgbButton = document.querySelector(".rgb-button");
+rgbButton.addEventListener();
