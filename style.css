@@ -74,12 +74,28 @@
 button {
     border-radius: 8px;
     padding: 8px 16px;
-    width: 69%;
     background-color: #e9e9ed;
     border: 1px solid black;
+    font-size: 16px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    width: 69%;
+    text-align: center;
+    justify-content: center;
+    gap: 16px;
 }
 
 button:hover{
     transform: scale(1.05);
     background-color: #D0D0D7;
+}
+
+.buttons .color-inp {
+    align-self: center;
+    height: 75px;
+    width: 75px;
+    
 }

@@ -14,25 +14,23 @@ function createGrid(size) {
         gridContainer.appendChild(row);
     }
 
-    let mouseIsDown = false
+    let mouseIsDown = false;
     const gridObjects = document.querySelectorAll(".grid-obj");
     gridObjects.forEach((element) => {
         element.addEventListener("mousedown", () => {
             mouseIsDown = true;
-            element.classList.toggle("perma-color");
+            element.classList.add("perma-hover");
         });
 
         element.addEventListener("mouseover", () => {
             if (mouseIsDown) {
                 element.classList.add("perma-hover");
             }
-        })
-
-        element.addEventListener("mouseup", () => {
+        });
+        });
+        document.addEventListener("mouseup", () => {
             mouseIsDown = false;
-        })
     });
-    
 }
 
 createGrid(16);
@@ -49,3 +47,20 @@ sizeSlider.addEventListener("input", () => {
     createGrid(sizeSliderVal);
     sliderValDiv.textContent = `${sizeSliderVal}x${sizeSliderVal}`;
 });
+
+const buttons = document.querySelectorAll("button");
+const buttonColorWhenClickedDiv = document.createElement("div");
+buttonColorWhenClickedDiv.style.backgroundColor = "black"
+buttonColorWhenClickedDiv.classList.add("button-color-when-clicked")
+
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        buttons.forEach((btn) => {
+            btn.style.backgroundColor = "";
+            btn.style.color = "";
+        });
+        button.style.backgroundColor = "#000000"
+        button.style.color = "#e9e9ed"
+    })
+})
