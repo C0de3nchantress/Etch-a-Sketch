@@ -47,8 +47,7 @@ function gridStyles(styles) {
             }
         });
     });
-    document.addEventListener("mouseup", (e) => {
-        e.preventDefault();
+    document.addEventListener("mouseup", () => {
         mouseIsDown = false;
     });
 }
@@ -213,8 +212,7 @@ function darkenAndLighten(lightingVal) {
             }
         });
     });
-    document.addEventListener("mouseup", (e) => {
-        e.preventDefault();
+    document.addEventListener("mouseup", () => {
         mouseIsDown = false;
     });
 }
