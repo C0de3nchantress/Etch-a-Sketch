@@ -4,6 +4,7 @@ const colorButton = document.querySelector(".color-button");
 const rgbButton = document.querySelector(".rgb-button");
 const eraserButton = document.querySelector(".eraser-button");
 const clearButton = document.querySelector(".clear-button");
+const darkenButton = document.querySelector(".darken-button");
 
 let activeButton = null;
 let activeButtonTemp = null;
@@ -71,6 +72,8 @@ sizeSlider.addEventListener("input", () => {
         eraserButton.click();
     } else if (activeButton === clearButton) {
         clearButton.click();
+    } else if (activeButton === darkenButton) {
+        darkenButton.click();
     }
 });
 
@@ -127,5 +130,80 @@ clearButton.addEventListener("click", () => {
     createGrid(sizeSliderVal);
 
     activeButton = activeButtonTemp;
-    activeButton.click()    
+    activeButton.click();
+});
+
+function rgbToHsl(rgb) {
+    let result = rgb.match(/\d+/g);
+    let r = result[0] / 255;
+    let g = result[1] / 255;
+    let b = result[2] / 255;
+
+    let max = Math.max(r, g, b);
+    let min = Math.min(r, g, b);
+    let h,
+        s,
+        l = (max + min) / 2;
+
+    if (max === min) {
+        h = s = 0;
+    } else {
+        let diff = max - min;
+        s = l > 0.5 ? diff / (2 - max - min) : diff / (max + min);
+
+        switch (max) {
+            case r:
+                h = (g - b) / diff + (g < b ? 6 : 0);
+                break;
+            case g:
+                h = (b - r) / diff + 2;
+                break;
+            case b:
+                h = (r - g) / diff + 4;
+                break;
+        }
+
+        h /= 6;
+    }
+
+    h = Math.round(h * 360);
+    s = Math.round(s * 100);
+    l = Math.round(l * 100);
+
+    return [h, s, l];
+}
+
+darkenButton.addEventListener("click", () => {
+    const gridObjects = document.querySelectorAll(".grid-obj");
+    let mouseIsDown = false;
+
+    gridObjects.forEach((element) => {
+        element.replaceWith(element.cloneNode(true));
+    });
+
+    const updatedGridObjects = document.querySelectorAll(".grid-obj");
+
+    updatedGridObjects.forEach((element) => {
+        element.addEventListener("mousedown", () => {
+            mouseIsDown = true;
+            let currentColor = getComputedStyle(element).backgroundColor;
+
+            let hslColor = rgbToHsl(currentColor);
+            hslColor[2] = Math.max(0, hslColor[2] - 10);
+            element.style.backgroundColor = `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2]}%)`;
+        });
+
+        element.addEventListener("mouseover", () => {
+            if (mouseIsDown) {
+                let currentColor = getComputedStyle(element).backgroundColor;
+
+                let hslColor = rgbToHsl(currentColor);
+                hslColor[2] = Math.max(0, hslColor[2] - 10);
+                element.style.backgroundColor = `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2]}%)`;
+            }
+        });
+    });
+    document.addEventListener("mouseup", () => {
+        mouseIsDown = false;
+    });
 });
