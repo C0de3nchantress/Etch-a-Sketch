@@ -5,6 +5,7 @@ const rgbButton = document.querySelector(".rgb-button");
 const eraserButton = document.querySelector(".eraser-button");
 const clearButton = document.querySelector(".clear-button");
 const darkenButton = document.querySelector(".darken-button");
+const lightenButton = document.querySelector(".lighten-button")
 
 let activeButton = null;
 let activeButtonTemp = null;
@@ -74,6 +75,8 @@ sizeSlider.addEventListener("input", () => {
         clearButton.click();
     } else if (activeButton === darkenButton) {
         darkenButton.click();
+    } else if (activeButton === lightenButton) {
+        lightenButton.click();
     }
 });
 
@@ -199,6 +202,42 @@ darkenButton.addEventListener("click", () => {
 
                 let hslColor = rgbToHsl(currentColor);
                 hslColor[2] = Math.max(0, hslColor[2] - 10);
+                element.style.backgroundColor = `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2]}%)`;
+            }
+        });
+    });
+    document.addEventListener("mouseup", () => {
+        mouseIsDown = false;
+    });
+});
+
+
+lightenButton.addEventListener("click", () => {
+    const gridObjects = document.querySelectorAll(".grid-obj");
+    let mouseIsDown = false;
+
+    gridObjects.forEach((element) => {
+        element.replaceWith(element.cloneNode(true));
+    });
+
+    const updatedGridObjects = document.querySelectorAll(".grid-obj");
+
+    updatedGridObjects.forEach((element) => {
+        element.addEventListener("mousedown", () => {
+            mouseIsDown = true;
+            let currentColor = getComputedStyle(element).backgroundColor;
+
+            let hslColor = rgbToHsl(currentColor);
+            hslColor[2] = Math.max(0, hslColor[2] + 10);
+            element.style.backgroundColor = `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2]}%)`;
+        });
+
+        element.addEventListener("mouseover", () => {
+            if (mouseIsDown) {
+                let currentColor = getComputedStyle(element).backgroundColor;
+
+                let hslColor = rgbToHsl(currentColor);
+                hslColor[2] = Math.max(0, hslColor[2] + 10);
                 element.style.backgroundColor = `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2]}%)`;
             }
         });
