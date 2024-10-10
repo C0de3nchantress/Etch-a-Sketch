@@ -28,14 +28,18 @@ function gridStyles(styles) {
     let mouseIsDown = false;
     const gridObjects = document.querySelectorAll(".grid-obj");
     gridObjects.forEach((element) => {
-        element.addEventListener("mousedown", () => {
+        element.setAttribute("draggable", false);
+
+        element.addEventListener("mousedown", (e) => {
+            e.preventDefault();
             mouseIsDown = true;
             if (styles.backgroundColor) {
                 element.style.backgroundColor = styles.backgroundColor;
             }
         });
 
-        element.addEventListener("mouseover", () => {
+        element.addEventListener("mouseover", (e) => {
+            e.preventDefault();
             if (mouseIsDown) {
                 if (styles.backgroundColor) {
                     element.style.backgroundColor = styles.backgroundColor;
@@ -43,7 +47,8 @@ function gridStyles(styles) {
             }
         });
     });
-    document.addEventListener("mouseup", () => {
+    document.addEventListener("mouseup", (e) => {
+        e.preventDefault();
         mouseIsDown = false;
     });
 }
@@ -176,7 +181,7 @@ function rgbToHsl(rgb) {
     return [h, s, l];
 }
 
-darkenButton.addEventListener("click", () => {
+function darkenAndLighten(lightingVal) {
     const gridObjects = document.querySelectorAll(".grid-obj");
     let mouseIsDown = false;
 
@@ -187,61 +192,37 @@ darkenButton.addEventListener("click", () => {
     const updatedGridObjects = document.querySelectorAll(".grid-obj");
 
     updatedGridObjects.forEach((element) => {
-        element.addEventListener("mousedown", () => {
+        element.addEventListener("mousedown", (e) => {
+            e.preventDefault();
             mouseIsDown = true;
             let currentColor = getComputedStyle(element).backgroundColor;
 
             let hslColor = rgbToHsl(currentColor);
-            hslColor[2] = Math.max(0, hslColor[2] - 10);
+            hslColor[2] = Math.max(0, hslColor[2] + lightingVal);
             element.style.backgroundColor = `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2]}%)`;
         });
 
-        element.addEventListener("mouseover", () => {
+        element.addEventListener("mouseover", (e) => {
+            e.preventDefault();
             if (mouseIsDown) {
                 let currentColor = getComputedStyle(element).backgroundColor;
 
                 let hslColor = rgbToHsl(currentColor);
-                hslColor[2] = Math.max(0, hslColor[2] - 10);
+                hslColor[2] = Math.max(0, hslColor[2] + lightingVal);
                 element.style.backgroundColor = `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2]}%)`;
             }
         });
     });
-    document.addEventListener("mouseup", () => {
+    document.addEventListener("mouseup", (e) => {
+        e.preventDefault();
         mouseIsDown = false;
     });
+}
+
+darkenButton.addEventListener("click", () => {
+    darkenAndLighten(-10);
 });
 
 lightenButton.addEventListener("click", () => {
-    const gridObjects = document.querySelectorAll(".grid-obj");
-    let mouseIsDown = false;
-
-    gridObjects.forEach((element) => {
-        element.replaceWith(element.cloneNode(true));
-    });
-
-    const updatedGridObjects = document.querySelectorAll(".grid-obj");
-
-    updatedGridObjects.forEach((element) => {
-        element.addEventListener("mousedown", () => {
-            mouseIsDown = true;
-            let currentColor = getComputedStyle(element).backgroundColor;
-
-            let hslColor = rgbToHsl(currentColor);
-            hslColor[2] = Math.max(0, hslColor[2] + 10);
-            element.style.backgroundColor = `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2]}%)`;
-        });
-
-        element.addEventListener("mouseover", () => {
-            if (mouseIsDown) {
-                let currentColor = getComputedStyle(element).backgroundColor;
-
-                let hslColor = rgbToHsl(currentColor);
-                hslColor[2] = Math.max(0, hslColor[2] + 10);
-                element.style.backgroundColor = `hsl(${hslColor[0]}, ${hslColor[1]}%, ${hslColor[2]}%)`;
-            }
-        });
-    });
-    document.addEventListener("mouseup", () => {
-        mouseIsDown = false;
-    });
+    darkenAndLighten(10);
 });
