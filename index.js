@@ -10,21 +10,28 @@ function createGrid(size) {
             grid.classList.add("grid-obj");
             row.appendChild(grid);
         }
-
         gridContainer.appendChild(row);
     }
 
+    
+}
+
+function gridColor(styles) {
     let mouseIsDown = false;
     const gridObjects = document.querySelectorAll(".grid-obj");
     gridObjects.forEach((element) => {
         element.addEventListener("mousedown", () => {
             mouseIsDown = true;
-            element.classList.add("perma-hover");
+            if (styles.backgroundColor) {
+                element.style.backgroundColor = styles.backgroundColor
+            }
         });
 
         element.addEventListener("mouseover", () => {
             if (mouseIsDown) {
-                element.classList.add("perma-hover");
+                if (styles.backgroundColor) {
+                    element.style.backgroundColor = styles.backgroundColor
+                }
             }
         });
         });
@@ -64,3 +71,21 @@ buttons.forEach((button) => {
         button.style.color = "#e9e9ed"
     })
 })
+
+const colorInput = document.querySelector(".color-inp");
+const colorButton = document.querySelector(".color-button")
+colorInput.value = "#FFC0CB";    
+let colorChoice = colorInput.value;
+
+colorInput.addEventListener("input", () => {
+    colorChoice = colorInput.value;
+    gridColor({backgroundColor: colorChoice});
+})
+colorButton.addEventListener("click", () => {
+    gridColor({backgroundColor: colorChoice});
+})
+
+document.addEventListener("DOMContentLoaded", () => {
+    colorButton.click();
+})
+
