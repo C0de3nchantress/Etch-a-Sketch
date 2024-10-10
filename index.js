@@ -6,6 +6,7 @@ const eraserButton = document.querySelector(".eraser-button");
 const clearButton = document.querySelector(".clear-button");
 
 let activeButton = null;
+let activeButtonTemp = null;
 
 function createGrid(size) {
     for (let i = 0; i < size; i++) {
@@ -85,6 +86,7 @@ buttons.forEach((button) => {
         button.style.backgroundColor = "#000000";
         button.style.color = "#e9e9ed";
 
+        activeButtonTemp = activeButton;
         activeButton = button;
     });
 });
@@ -124,6 +126,6 @@ clearButton.addEventListener("click", () => {
     gridContainer.innerHTML = "";
     createGrid(sizeSliderVal);
 
-    colorButton.click();
-    activeButton = colorButton;
+    activeButton = activeButtonTemp;
+    activeButton.click()    
 });
