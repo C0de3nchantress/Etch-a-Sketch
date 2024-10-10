@@ -5,7 +5,7 @@ const rgbButton = document.querySelector(".rgb-button");
 const eraserButton = document.querySelector(".eraser-button");
 const clearButton = document.querySelector(".clear-button");
 const darkenButton = document.querySelector(".darken-button");
-const lightenButton = document.querySelector(".lighten-button")
+const lightenButton = document.querySelector(".lighten-button");
 
 let activeButton = null;
 let activeButtonTemp = null;
@@ -210,7 +210,6 @@ darkenButton.addEventListener("click", () => {
         mouseIsDown = false;
     });
 });
-
 
 lightenButton.addEventListener("click", () => {
     const gridObjects = document.querySelectorAll(".grid-obj");
