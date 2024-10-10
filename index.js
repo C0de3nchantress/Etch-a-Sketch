@@ -1,5 +1,10 @@
 const gridContainer = document.querySelector(".grid.container");
+
 const colorButton = document.querySelector(".color-button");
+const rgbButton = document.querySelector(".rgb-button");
+
+let activeButton = null;
+
 function createGrid(size) {
     for (let i = 0; i < size; i++) {
         const row = document.createElement("div");
@@ -14,7 +19,7 @@ function createGrid(size) {
     }
 }
 
-function gridColor(styles) {
+function gridStyles(styles) {
     let mouseIsDown = false;
     const gridObjects = document.querySelectorAll(".grid-obj");
     gridObjects.forEach((element) => {
@@ -52,7 +57,13 @@ sizeSlider.addEventListener("input", () => {
     gridContainer.innerHTML = "";
     createGrid(sizeSliderVal);
     sliderValDiv.textContent = `${sizeSliderVal}x${sizeSliderVal}`;
-    colorButton.click();
+
+    if (activeButton === colorButton){
+        colorButton.click();
+    } else if (activeButton === rgbButton){
+        rgbButton.click()
+    }
+    
 });
 
 const buttons = document.querySelectorAll("button");
@@ -66,6 +77,8 @@ buttons.forEach((button) => {
         });
         button.style.backgroundColor = "#000000";
         button.style.color = "#e9e9ed";
+
+        activeButton = button;
     });
 });
 
@@ -76,15 +89,21 @@ let colorChoice = colorInput.value;
 
 colorInput.addEventListener("input", () => {
     colorChoice = colorInput.value;
-    gridColor({ backgroundColor: colorChoice });
+    colorButton.click();
 });
 colorButton.addEventListener("click", () => {
-    gridColor({ backgroundColor: colorChoice });
+    gridStyles({ backgroundColor: colorChoice });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
     colorButton.click();
 });
 
-const rgbButton = document.querySelector(".rgb-button");
-rgbButton.addEventListener();
+
+rgbButton.addEventListener("click", () => {
+    gridStyles({
+        get backgroundColor() {
+            return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+        }
+    });
+});
